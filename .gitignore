@@ -1,0 +1,4 @@
+# ignore input image and output pdf
+*/target
+*/input
+*.pdf
