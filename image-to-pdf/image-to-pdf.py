@@ -2,15 +2,34 @@ from PIL import Image
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 import os
+import re
+from dotenv import load_dotenv
 
-# subject_name = "electric-energy-eng-intro"
-subject_name = "artificial-intelligence"
-class_no = 1
+load_dotenv()
+
+# ==================================================
+# CHANGE BELOW
+# subject_name = "your-subject-name"
+subject_name = os.environ["SUBJECT_NAME"]
+
+class_no = 6
+# whether your image file name is number or not
+filename_is_number = False
+# ==================================================
+
 class_no = str(class_no)
+
+def natural_sort_key(s):
+    # return filename as number by extract
+    return [int(text) if text.isdigit() else text.lower() for text in re.split('(\d+)', s)]
 
 def images_to_pdf(input_folder, output_pdf_path):
     image_files = [f for f in os.listdir(input_folder) if f.endswith(".jpg")]
-    image_files.sort()  # sort files by name
+    
+    if filename_is_number:
+        image_files.sort(key=natural_sort_key)  # sort files by number
+    else:
+        image_files.sort()                      # sort files by name
 
     c = canvas.Canvas(output_pdf_path, pagesize=letter)
     width, height = letter
@@ -30,6 +49,10 @@ def images_to_pdf(input_folder, output_pdf_path):
     c.save()
 
 if __name__ == "__main__":
+    if subject_name is None:
+        print("Please set subject name")
+        exit()
+
     input_folder = "input/" + subject_name + "/" + class_no     # input folder path
     output_pdf_path = subject_name + "_" + class_no + ".pdf"    # output file name
     images_to_pdf(input_folder, output_pdf_path)

@@ -1,4 +1,6 @@
-# ignore input image and output pdf
+# ignore input image, output pdf, and env file
 */target
 */input
+*/output
 *.pdf
+.env
