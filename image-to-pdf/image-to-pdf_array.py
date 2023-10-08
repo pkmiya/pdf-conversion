@@ -2,18 +2,17 @@ from PIL import Image
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 import os
+import re
 from dotenv import load_dotenv
 
 load_dotenv()
 
 # ==================================================
-# CHANGE BELOW
+# ENV
 subject_name = os.environ["SUBJECT_NAME"]
-
-class_no_start = 2
-class_no_end = 4
-# whether your image file name is number or not
-filename_is_number = False
+class_no_start = int(os.environ["CLASS_NO_START"])
+class_no_end = int(os.environ["CLASS_NO_END"])
+filename_is_number = int(os.environ["FILENAME_IS_NUMBER"])
 # ==================================================
 
 class_no_arr = list(range(class_no_start, class_no_end + 1))
@@ -45,8 +44,8 @@ def images_to_pdf(input_folder, output_pdf_path):
     c.save()
 
 if __name__ == "__main__":
-    if subject_name is None:
-        print("Please set subject name")
+    if subject_name is None or class_no_start is None or class_no_end is None:
+        print("Please set subject name, class no start, class no end")
         exit()
 
     for class_no in class_no_arr:

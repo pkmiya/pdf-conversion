@@ -8,16 +8,11 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # ==================================================
-# CHANGE BELOW
-# subject_name = "your-subject-name"
+# ENV
 subject_name = os.environ["SUBJECT_NAME"]
-
-class_no = 6
-# whether your image file name is number or not
-filename_is_number = False
+class_no = os.environ["CLASS_NO"]
+filename_is_number = int(os.environ["FILENAME_IS_NUMBER"])
 # ==================================================
-
-class_no = str(class_no)
 
 def natural_sort_key(s):
     # return filename as number by extract
